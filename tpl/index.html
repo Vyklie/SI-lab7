@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="jquery-ui.css" type="text/css" />
+    <link rel="stylesheet" id="theme" href="theme/Silver.css" type="text/css" />
+
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-ui.min.js"></script>
+    <script type="text/javascript" src="template.js"></script>
+    <script type="text/javascript" src="tools.js"></script>
+    <script type="text/javascript" src="client.js"></script>
+
+    <title>iptables</title>
+</head>
+
+<body>
+
+    <div class="error"></div>
+    <div class="info"></div>
+
+    <div class="content">
+        <ul class="tabs mainmenu">
+            <li class="parent-item">
+                <a class="item" onclick="rules.showListWithPath('input', 'filter');">INPUT</a>
+                <ul class="dropdown" style="display: none;">
+                    <li><a class="item" onclick="rules.showListWithPath('input', 'filter');">filter</a></li>
+                    <li><a class="item" onclick="rules.showListWithPath('input', 'mangle');">mangle</a></li>
+                </ul>
+            </li>
+            <li class="parent-item">
+                <a class="item" onclick="rules.showListWithPath('output', 'filter');">OUTPUT</a>
+                <ul class="dropdown" style="display: none;">
+                    <li><a class="item" onclick="rules.showListWithPath('output', 'filter');">filter</a></li>
+                    <li><a class="item" onclick="rules.showListWithPath('output', 'nat');">nat</a></li>
+                    <li><a class="item" onclick="rules.showListWithPath('output', 'mangle');">mangle</a></li>
+                </ul>
+            </li>
+            <li class="parent-item">
+                <a class="item" onclick="rules.showListWithPath('forward', 'filter');">FORWARD</a>
+                <ul class="dropdown" style="display: none;">
+                    <li><a class="item" onclick="rules.showListWithPath('forward', 'filter');">filter</a></li>
+                    <li><a class="item" onclick="rules.showListWithPath('forward', 'mangle');">mangle</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <table class="main">
+            <thead>
+                <tr>
+                    <th class="id dark-table">ID</th>
+                    <th class="mon dark-table">pkts</th>
+                    <th class="mon dark-table">bytes</th>
+                    <th class="rule dark-table">RULE</th>
+                    <th class="cmd dark-table">CMD</th>
+                </tr>
+            </thead>
+            <tbody id="main">
+
+            </tbody>
+        </table>
+
+        <div class="tools">
+            <a class="button btn-save" onclick="tools.save();" title="Save rules into file">Save</a>
+        </div>
+
+        <div class="addchain">
+            <form>
+                <table class="main">
+                    <tr>
+                        <td class="cmd">Name:</td>
+                        <td><input type="text" id="chainname" /></td>
+                    </tr>
+                    <tr>
+                        <td class="cmd">Table:</td>
+                        <td><select id="chaintable"><option value="filter">filter</option><option value="nat">nat</option><option value="mangle">mangle</option></select></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="dialog" id="makeRule">
+            <table class="" id="ruleTable">
+            </table>
+        </div>
+        <div class="dialog" id="syslog">
+            <div id="logs" class="logpanel">
+
+            </div>
+        </div>
+        <div class="dialog" id="tcpdump">
+            <div class="content">
+                <div class="params">
+                    <span>Dev:</span>
+                    <input id="eth" placeholder="eth0">
+                    <span>Src:</span>
+                    <input id="src" placeholder="127.0.0.1">
+                    <span>Dest:</span>
+                    <input id="dst" placeholder="127.0.0.1">
+                    <span>Port:</span>
+                    <input id="port" placeholder="80">
+                    <button onclick="tools.dumpParams();">Apply</button>
+                    <button onclick='$("#dump").html("");'>Clear</button>
+                </div>
+                <div id="dump" class="logpanel">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
